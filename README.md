@@ -29,3 +29,6 @@ Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 **Security  :** DotEnv v17.2.3
 **Nodemon   :** v3.1.11
 **Developer :** MocikhoAra
+
+### UPDATE (Penambahan, Perubahan, Pengurangan, Perbaikan)
+* +Ticket (Dimana user bisa mengkomplain, bertanya, maupun melapor melalui ticket tersebut)

@@ -16,6 +16,9 @@ const client = new Client({
     ]
 });
 
+const setupTicket = require('./ticket.js');
+setupTicket(client);
+
 client.once('clientReady', () => {
     console.log(`Gas! Bot ${client.user.tag} sudah online!`);
 });
@@ -109,7 +112,7 @@ client.on('messageCreate', (msg) => {
             .setDescription('Berikut adalah update terbaru dari bot ini.')
             .addFields(
                 { name: 'Versi', value: datumbot.Version, inline: true },
-                { name: 'Fitur Baru', value: '`- Penambahan command / (slash command)\n- Perbaikan bug minor & patch +Security\n- Penambahan fitur sapaan`', inline: false }
+                { name: 'Fitur Baru', value: '`- ticket`', inline: false }
             )
             .setThumbnail(client.user.displayAvatarURL())
             .setFooter({ text: `Update untuk member` })
