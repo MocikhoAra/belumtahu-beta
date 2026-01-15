@@ -4,7 +4,6 @@ module.exports = function(client) {
     client.on('messageCreate', async (msg) => {
         if (msg.author.bot) return;
 
-        // Setup hanya jalankan sekali di channel khusus tiket
         if (msg.content === '!setup-ticket') {
             if (!msg.member.permissions.has(PermissionFlagsBits.Administrator)) return;
 
@@ -25,11 +24,8 @@ module.exports = function(client) {
                     .setEmoji('📩')
                     .setStyle(ButtonStyle.Secondary) // Warna abu-abu gelap/kuning
             );
-
-            // Hapus chat "!setup-ticket" kamu supaya channel bersih
             msg.delete().catch(() => {});
 
-            // Kirim pesan Embed utamanya (Ini akan menetap selamanya)
             msg.channel.send({ embeds: [embed], components: [row] });
         }
 

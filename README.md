@@ -22,7 +22,7 @@ Untuk sekarang command masih sedikit dan akan dikembangkan kedepannya.
 ### Apakah ada rencana untuk menambahkan games?
 Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 
-**Bot       :** v0.5.14 (beta)
+**Bot       :** v0.6.15 (beta)
 **Runtime   :** v18.19.1
 **TypeCode  :** JavaScript(node.js)
 **Library   :** discord.js v14.25.1
@@ -30,5 +30,8 @@ Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 **Nodemon   :** v3.1.11
 **Developer :** MocikhoAra
 
-### UPDATE (Penambahan, Perubahan, Pengurangan, Perbaikan)
-* +Ticket (Dimana user bisa mengkomplain, bertanya, maupun melapor melalui ticket tersebut)
+### UPDATE (Penambahan+, Perubahan/, Pengurangan-, Perbaikan=)
+* +folder pecahan & commands
+* /memindahkan moderations, save&ceklogs, slash commands, ticket, ke folder commands
+* /memindahkan .js utama ke folder pecahan
+* /memindahkan semua funsgi ke commands agar rapi

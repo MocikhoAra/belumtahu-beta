@@ -1,6 +1,6 @@
 require('dotenv').config();
-const fs = require('fs'); //baris ini untuk codingan warn, kick, ban, & logs.
-const { version } = require('./package.json'); //impor version dari package.json
+const fs = require('fs');
+const { version } = require('../package.json'); 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000; // 5 detik cooldown antara perintah
 const { PermissionFlagsBits, Embed, escapeNumberedList } = require('discord.js');
@@ -16,7 +16,7 @@ const client = new Client({
     ]
 });
 
-const setupTicket = require('./ticket.js');
+const setupTicket = require('./commands/ticket.js');
 setupTicket(client);
 
 client.once('clientReady', () => {
@@ -147,14 +147,11 @@ client.on('messageCreate', (msg) => {
 
     // Stop jika tidak ada prefix
     if (!prefixmultiuse) return;
-
-    // Codingan warn, kick, ban, & log
-    const args = msg.content.split(' ');
-    const command = args[0].toLowerCase();
-    const target = msg.mentions.members.first();
-
-    // Fungsi untuk save log
+    // Fungsi ketiklog untuk menyimpan log tindakan
     const ketiklog = (tindakan, targetpelakuid, alasan) => {
+        if (!fs.existsSync('./logs.json')) {
+            fs.writeFileSync('./logs.json', JSON.stringify([]));
+        }
         const datumlama = JSON.parse(fs.readFileSync('./logs.json', 'utf-8'));
         const informasilog = {
             waktu: new Date().toLocaleString('id-ID', {
@@ -171,147 +168,13 @@ client.on('messageCreate', (msg) => {
         fs.writeFileSync('./logs.json', JSON.stringify(datumlama, null, 2));
     };
 
-    //Logika moderator atau moderasi
-    //warn
-    if (command === '!warn') {
-        if (!msg.member.permissions.has(PermissionFlagsBits.ManageMessages)) return msg.reply("Kamu tidak punya izin!");
-        if (!target) return msg.reply("Tag dulu orangnya!");
-
-        const alasan = args.slice(2).join(' ');
-        ketiklog("WARN", target.id, alasan);
-
-        const warnEmbed = new EmbedBuilder()
-            .setColor(0xFFFF00)
-            .setTitle('⚠️**WARN**')
-            .setDescription(`Seorang member, yaitu <@${target.id}> telah diberikan peringatan.`)
-            .addFields(
-                { name: '👤 PelakuID', value: `${target.id}`, inline: true },
-                { name: '🛡️ Staff', value: `${msg.author.username}`, inline: true },
-                { name: '📝 Alasan', value: alasan }
-            )
-            .setTimestamp();
-
-        msg.reply({ embeds: [warnEmbed] });
-    }
-
-    //kick
-    if (command === '!kick') {
-        if (!msg.member.permissions.has(PermissionFlagsBits.KickMembers)) return msg.reply("Kamu tidak punya izin karena bukan staff!");
-        if (!target) return msg.reply("Siapa yang mau dikick?");
-
-        const alasan = args.slice(2).join(' ');
-        target.kick(alasan)
-            .then(() => {
-                ketiklog("KICK", target.id, alasan);
-
-                const kickEmbed = new EmbedBuilder()
-                    .setColor(0xFF4500)
-                    .setTitle('🚪**Member dikick**')
-                    .setDescription(`Seorang member, yaitu <@${target.id}> telah dikick.`)
-                    .addFields(
-                        { name: 'PelakuID', value: target.id, inline: true },
-                        { name: 'Alasan', value: alasan, inline: true }
-                    )
-                    .setTimestamp();
-
-                msg.reply({ embeds: [kickEmbed] });
-            })
-            .catch(err => {
-                console.error(err);
-                msg.reply("Gagal mengkick?! coba cek lagi.");
-            });
-    }
-
-    //ban
-    if (command === '!ban') {
-        if (!msg.member.permissions.has(PermissionFlagsBits.BanMembers)) return msg.reply("Kamu tidak punya izin karena bukan Staff!!");
-        if (!target) return msg.reply("Siapa yang mau diban?");
-
-        const alasan = args.slice(2).join(' ');
-        target.ban({ reason: alasan })
-            .then(() => {
-                ketiklog("BAN", target.id, alasan);
-
-                const banEmbed = new EmbedBuilder()
-                    .setColor(0xC93C1E)
-                    .setTitle('🚫**Seseorang telah diban dari server**')
-                    .setDescription(`Seorang member, yaitu <@${target.id}> telah diban.`)
-                    .addFields(
-                        { name: 'PelakuID', value: target.id, inline: true },
-                        { name: 'Alasan', value: alasan, inline: true }
-                    )
-                    .setTimestamp();
-
-                msg.reply({ embeds: [banEmbed] });
-            })
-            .catch(err => {
-                console.error(err);
-                msg.reply("Gagal ban? coba cek dulu.");
-            });
-    }
-
-    //cek log
-    if (command === '!ketiklog' || command === '!ceklog') {
-        const log = JSON.parse(fs.readFileSync('./logs.json', 'utf-8'));
-        if (log.length === 0) return msg.reply("Belum ada catatan dari staff.");
-
-        let listlog = "**Informasi:**\n";
-        log.slice(-5).forEach((l, i) => {
-            listlog += `**${i + 1}**. ${l.tindakan} **<@${l.pelakuID}>** oleh ${l.staff} \n🗓️${l.waktu} | \n🗒️${l.alasan}`;
-        });
-
-        const logEmbed = new EmbedBuilder()
-            .setColor(0xBDCBCB)
-            .setTitle('🗒️**Catatan PelakuID**')
-            .setDescription(listlog)
-            .setThumbnail(client.user.displayAvatarURL())
-            .setFooter({ text: 'Menampilkan 5 aktivitas terakhir' })
-            .setTimestamp();
-
-        msg.reply({ embeds: [logEmbed] });
-    }
+    // Untuk bagian moderation (warn, kick, ban)
+    require('./commands/moderation.js')(client, version, msg, ketiklog);
+    // Bagian save & cek logs
+    require('./commands/save&ceklogs.js')(client, version, msg, ketiklog);
 });
 
-// --- BAGIAN KHUSUS UNTUK MENJAWAB SLASH COMMAND (/) ---
-client.on('interactionCreate', async (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
-
-    const commandName = interaction.commandName.toLowerCase();
-
-    if (commandName === 'status') {
-        const datumbot = {
-            "Nama": "Belum tahu",
-            "Version": version,
-            "Pembuat": "MocikhoAra",
-            "JenisKode": "JavaScript",
-            "Bot": "Official Belum tahu"
-        };
-
-        const statusEmbed = new EmbedBuilder()
-            .setColor(0x0099FF)
-            .setTitle('🛰️ Status Info - ' + datumbot.Nama)
-            .setDescription('Halo! Ini adalah status bot dalam bentuk slash command.')
-            .addFields(
-                { name: 'Version', value: datumbot.Version, inline: true },
-                { name: 'Pembuat', value: datumbot.Pembuat, inline: true },
-                { name: 'Jenis Kode', value: datumbot.JenisKode, inline: true },
-                { name: 'Bot', value: datumbot.Bot, inline: true },
-                { name: 'Status', value: 'Aktif dan berjalan dengan baik', inline: false }
-            )
-            .setThumbnail(client.user.displayAvatarURL())
-            .setTimestamp()
-            .setFooter({ text: 'Sistem Aktif • Linux' });
-
-        await interaction.reply({ embeds: [statusEmbed] });
-    }
-
-    if (commandName === 'menu') {
-        await interaction.reply('📑 Gunakan `!menu` untuk melihat daftar lengkap fitur.');
-    }
-
-    if (commandName === 'hi') {
-        await interaction.reply(`Hi **${interaction.user.username}**!`);
-    }
-});
+// Bagian slash command
+require('./commands/slashcommand.js').function(client, version);
 
 client.login(process.env.DISCORD_TOKEN);
