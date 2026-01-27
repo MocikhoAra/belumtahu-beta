@@ -22,7 +22,7 @@ Untuk sekarang command masih sedikit dan akan dikembangkan kedepannya.
 ### Apakah ada rencana untuk menambahkan games?
 Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 
-**Bot       :** v0.6.15 (beta)
+**Bot       :** v0.6.15 (release)
 **Runtime   :** v18.19.1
 **TypeCode  :** JavaScript(node.js)
 **Library   :** discord.js v14.25.1
@@ -31,7 +31,13 @@ Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 **Developer :** MocikhoAra
 
 ### UPDATE (Penambahan+, Perubahan/, Pengurangan-, Perbaikan=)
-* +folder pecahan & commands
-* /memindahkan moderations, save&ceklogs, slash commands, ticket, ke folder commands
-* /memindahkan .js utama ke folder pecahan
-* /memindahkan semua funsgi ke commands agar rapi
+* +Add something in README.md
+* RELEASE BOT OFFICIAL Belum tahu v1.6.15 (release)
+
+### TIPS BIKIN BOT DISCORD DALAM FOLDER
+* **Tools:** VScode, javascript, dotenvt, nodemon (not global).
+
+* **HOW TO INSTALL LIBRARY, SECURITY, NODEMON?** Pertama, bikin folder khusus bot discord. Kedua, masuk VScode lalu open folder dan select folder khusus bot kalian. Ketiga, buka terminal VScode dengan ctrl+`. Keempat, ketik npm init -y, setelah itu lanjut npm install discord.js dotenv, then npm install --save-dev nodemon. Sisanya kalian bisa search sendiri, hehe (bisa cari lewat github, ai, youtube, etc).
+
+# NOTE:
+* Jika kalian masih baru belajar, gunakan bawaan dulu. Tapi klo pengen lebih tingkat, bisa gunakan dotenv.

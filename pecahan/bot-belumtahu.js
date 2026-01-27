@@ -112,7 +112,7 @@ client.on('messageCreate', (msg) => {
             .setDescription('Berikut adalah update terbaru dari bot ini.')
             .addFields(
                 { name: 'Versi', value: datumbot.Version, inline: true },
-                { name: 'Fitur Baru', value: '`- ticket`', inline: false }
+                { name: 'Fitur Baru', value: '`+Release bot official Belum tahu`', inline: false }
             )
             .setThumbnail(client.user.displayAvatarURL())
             .setFooter({ text: `Update untuk member` })
