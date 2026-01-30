@@ -1,7 +1,7 @@
 {
   "name": "bot-discord-belumtahu",
   "version": "1.6.15",
-  "description": "",
+  "description": "Hi👋, its me, MocikhoAra.",
   "main": "bot-belumtahu.js",
   "scripts": {
     "start": "node pecahan/bot-belumtahu.js",
