@@ -13,9 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^14.25.1",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.3.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MocikhoAra/belumtahu-bot-discord.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MocikhoAra/belumtahu-bot-discord/issues"
+  },
+  "homepage": "https://github.com/MocikhoAra/belumtahu-bot-discord#readme"
 }

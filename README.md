@@ -26,18 +26,20 @@ Untuk sekarang belum ada, karena saya ingin fokus bagian Moderation & Security.
 **Runtime   :** v18.19.1
 **TypeCode  :** JavaScript(node.js)
 **Library   :** discord.js v14.25.1
-**Security  :** DotEnv v17.2.3
+**Security  :** DotEnv v17.3.1
 **Nodemon   :** v3.1.11
 **Developer :** MocikhoAra
 
 ### UPDATE (Penambahan+, Perubahan/, Pengurangan-, Perbaikan=)
-* +Add something in README.md
-* RELEASE BOT OFFICIAL Belum tahu v1.6.15 (release)
+* +Update DotEnv version
 
 ### TIPS BIKIN BOT DISCORD DALAM FOLDER
 * **Tools:** VScode, javascript, dotenvt, nodemon (not global).
 
 * **HOW TO INSTALL LIBRARY, SECURITY, NODEMON?** Pertama, bikin folder khusus bot discord. Kedua, masuk VScode lalu open folder dan select folder khusus bot kalian. Ketiga, buka terminal VScode dengan ctrl+`. Keempat, ketik npm init -y, setelah itu lanjut npm install discord.js dotenv, then npm install --save-dev nodemon. Sisanya kalian bisa search sendiri, hehe (bisa cari lewat github, ai, youtube, etc).
+
+* **HOW TO INSTALL FOR WINDOWS ENTERPRISE LTSC**
+* Buat pengguna Windows Enterprise LTSC bisa ikut cara ini: install node.js di website https://nodejs.org/en/download, untuk Git: https://git-scm.com/install/windows. Setelah download semua jalankan hasil download tersebut. Jika sudah, buka powershell administration, Copy " Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine " lalu ketik A (all), why? karena "Secara default, Windows mematikan fitur menjalankan script .ps1 untuk mencegah virus. Namun, karena npm di Windows berjalan menggunakan script tersebut, kita harus memberikan izin tingkat RemoteSigned agar script lokal (seperti npm yang baru kamu instal) bisa dijalankan." By Gemini :D setelah selesai, kalian bisa ketik " npm init -y ", lalu " npm install discord.js dotenv ", lalu " npm install --save-dev nodemon ".
 
 # NOTE:
 * Jika kalian masih baru belajar, gunakan bawaan dulu. Tapi klo pengen lebih tingkat, bisa gunakan dotenv.
